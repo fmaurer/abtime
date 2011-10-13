@@ -87,7 +87,7 @@
 			getNextExercise(0);//start first excercise
 			
 			var times = 9;
-			$(document).everyTime(32000,"exerciseTimer",function(i) {
+			$(document).everyTime(32500,"exerciseTimer",function(i) {
 			  getNextExercise(i);
 			}, times);
 			
@@ -106,36 +106,39 @@
 		});
 		
 		function getNextExercise(exNum){
+			
 			var exerciseTitle = $("div.exercise").eq(exNum).text();
 			$("div.exercise").eq(exNum).css("background-color","blue");
+			$("h2.currentExcercise").text(exerciseTitle);
+			$("div#view_firstPage").show();				
 			
-			$("div#clock span").html("00").everyTime(1000,"secondHand",function(i) {
-				if(i<=30) {
-					if(i<10) {
-						var formattedText = "0"+i
-					} else {var formattedText = ""+i}
-					$(this).html(formattedText);
-				} else {
-					$("div#clock span").stopTime("secondHand");
-					//$("body").css("background-color","black")
-					$("body").animate({opacity:0},150,function(){
-						$("body").animate({opacity:1},150,function(){
-							$("body").animate({opacity:0},150,function(){
-								$("body").animate({opacity:1},150,function(){
-									$("body").animate({opacity:0},150,function(){
-										$("body").animate({opacity:1},150,function(){
-											//$("body").css("background-color","white")
-										})
-									})
+			$("div#view_firstPage").animate({opacity:0.25},150,function(){
+				$("div#view_firstPage").animate({opacity:0.75},150,function(){
+					$("div#view_firstPage").animate({opacity:0.25},150,function(){
+						$("div#view_firstPage").animate({opacity:0.75},150,function(){
+							$("div#view_firstPage").animate({opacity:0.25},150,function(){
+								$("div#view_firstPage").animate({opacity:1},150,function(){
+									$("div#clock span").html("30").everyTime(1000,"secondHand",function(i) {
+										var counter = 30 - i;
+										if(i<=30) {
+											if(counter<10) {
+												var formattedText = "0"+counter
+											} else {var formattedText = ""+counter}
+											$(this).html(formattedText);
+										} else {
+											$("div#clock span").stopTime("secondHand");
+											$("div#view_firstPage").hide();				
+										}
+									}, 31);
 								})
 							})
 						})
-					})	
-					//$(document).stopTime("exerciseTimer");				
-				}
-			}, 31);
+					})
+				})
+			})
 			
-			$("h2.currentExcercise").text(exerciseTitle);
+			
+			
 		}		
 		
 	});
@@ -179,7 +182,7 @@
 					<div class="exercise">Lawn chairs.</div>
 					<div class="exercise">Cross over reaches.</div>
 					<div class="exercise">Half lawn chairs.</div>
-					<div class="exercise">6-inch holes.</div>
+					<div class="exercise">6-inch holds.</div>
 					<div class="exercise">Rope climb.</div>
 					<div class="exercise">Jack knives.</div>
 					<div class="exercise">Frogs, 3 seconds.</div>
